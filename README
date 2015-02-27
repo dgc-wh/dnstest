@@ -1,0 +1,39 @@
+Hello, and welcome.  Given that so many people are encountering DNS hijacking 
+it's actually a good thing to, you know, pay attention to where your DNS is 
+pointing.  So that's what this does.  Here's the instructions:
+
+1) Make sure you have Net::DNS installed.  If not, use cpan and type 
+
+install Net::DNS
+
+2) Edit dnstable.dat and remove the example and replace it with your own.  Make 
+sure you use tabs to delimit the strings. Feel free to fork it the code and 
+make it do whatever you want to support additional features if you need them.
+The syntax is:
+
+hostname<tab>IP address<newline>
+hostname2<tab>IP address2<newline>
+...
+
+3) Edit dnstest.pl and change the lines $config to match the path of your
+configuration file.  And change the $mail to be your email address where you
+want alerts sent.
+
+4) Add it to crontab (using crontab -e) with a string similar to this:
+
+0 * * * * /usr/bin/perl /path/to/dnstest.pl >/dev/null
+
+This will run it once an hour, at the top of the hour.  You can change it to
+whatever works best for you, of course.   You can also run this out of nagios
+or similar apps if you want.
+
+5) TEST IT!  Change dnstable.dat to an incorrect IP address and wait for the 
+alert to come in.  If it doesn't come in within an hour, you've messed 
+something up.
+
+6) Sit back, relax, pour yourself a Mai Thai, get some tanning lotion and let 
+dnstable.pl do the work for you!  There.  I've replaced an annoying job with a 
+very short Perl script.  You're welcome.
+
+xoxo
+- RSnake
